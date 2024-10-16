@@ -1,12 +1,15 @@
 package com.github.ki3lmigu3l.library.api.dto;
 
-import lombok.Builder;
+import lombok.*;
 
 @Builder
-public record BookDTO(
-        Long id,
-        String title,
-        String author,
-        String isbn
-) {
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class BookDTO {
+    private Long id;
+    private String title;
+    private String author;
+    private String isbn;
 }

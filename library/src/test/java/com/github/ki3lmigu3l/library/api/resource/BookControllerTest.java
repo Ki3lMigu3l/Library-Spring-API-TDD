@@ -45,7 +45,6 @@ public class BookControllerTest {
 
         BookDTO dto = BookDTO
                 .builder()
-                .id(1L)
                 .author("Robert C. Martin")
                 .title("Código Limpo")
                 .isbn("8576082675")
@@ -59,7 +58,6 @@ public class BookControllerTest {
                 .build();
 
         BDDMockito.given(bookService.save(Mockito.any(Book.class))).willReturn(bookBuilder);
-
         String json = new ObjectMapper().writeValueAsString(dto);
 
         MockHttpServletRequestBuilder request = MockMvcRequestBuilders
@@ -72,9 +70,9 @@ public class BookControllerTest {
                 .perform(request)
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.jsonPath("id").value(2L))
-                .andExpect(jsonPath("title").value(dto.title()))
-                .andExpect(jsonPath("author").value(dto.author()))
-                .andExpect(jsonPath("isbn").value(dto.isbn()));
+                .andExpect(jsonPath("title").value(dto.getTitle()))
+                .andExpect(jsonPath("author").value(dto.getAuthor()))
+                .andExpect(jsonPath("isbn").value(dto.getIsbn()));
     }
 
     @Test
