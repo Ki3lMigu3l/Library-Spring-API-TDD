@@ -6,6 +6,8 @@ import com.github.ki3lmigu3l.library.api.repository.BookRepository;
 import com.github.ki3lmigu3l.library.api.service.BookService;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class BookServiceImpl implements BookService {
 
@@ -22,5 +24,10 @@ public class BookServiceImpl implements BookService {
         }
 
         return bookRepository.save(book);
+    }
+
+    @Override
+    public Optional<Book> getById(Long id) {
+        return bookRepository.findById(id);
     }
 }
