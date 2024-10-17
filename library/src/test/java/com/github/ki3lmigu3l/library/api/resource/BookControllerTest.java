@@ -1,8 +1,8 @@
 package com.github.ki3lmigu3l.library.api.resource;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.ki3lmigu3l.library.api.dto.BookDTO;
+import com.github.ki3lmigu3l.library.api.exception.BusinessException;
 import com.github.ki3lmigu3l.library.api.model.Book;
 import com.github.ki3lmigu3l.library.api.service.BookService;
 import org.hamcrest.Matchers;
@@ -23,8 +23,8 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 
 @ExtendWith(SpringExtension.class)
@@ -92,5 +92,38 @@ public class BookControllerTest {
         mockMvc.perform(request)
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("errors", Matchers.hasSize(3)));
+    }
+
+    @Test
+    @DisplayName("Deve lançar um erro ao tentar cadastrar um livro com ISBN já utilizado.")
+    public void createBookWithDuplicatedIsbn() throws Exception {
+
+        BookDTO bookDTO = createNewBook();
+        String json = new ObjectMapper().writeValueAsString(bookDTO);
+        String mensagemError = "ISBN já cadastrado";
+
+        BDDMockito.given(bookService.save(Mockito.any(Book.class)))
+                .willThrow(new BusinessException(mensagemError));
+
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post(BOOK_API)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        mockMvc.perform(request)
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("errors", Matchers.hasSize(1)))
+                .andExpect(jsonPath("errors[0]").value(mensagemError));
+    }
+
+    private BookDTO createNewBook() {
+        return BookDTO.builder()
+                .id(1L)
+                .author("Robert C. Martin")
+                .title("Código Limpo")
+                .isbn("8576082675")
+                .build();
     }
 }

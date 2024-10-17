@@ -2,6 +2,7 @@ package com.github.ki3lmigu3l.library.api.resource;
 
 import com.github.ki3lmigu3l.library.api.dto.BookDTO;
 import com.github.ki3lmigu3l.library.api.exception.ApiErrors;
+import com.github.ki3lmigu3l.library.api.exception.BusinessException;
 import com.github.ki3lmigu3l.library.api.model.Book;
 import com.github.ki3lmigu3l.library.api.service.BookService;
 import jakarta.validation.Valid;
@@ -38,5 +39,11 @@ public class BookController {
     public ApiErrors handleValidationException (MethodArgumentNotValidException exception) {
         BindingResult bindingResult = exception.getBindingResult();
         return new ApiErrors(bindingResult);
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiErrors handleBusinessException (BusinessException exception) {
+        return new ApiErrors(exception);
     }
 }
