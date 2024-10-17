@@ -25,7 +25,7 @@ public class BookRepositoryTest {
     BookRepository bookRepository;
 
     @Test
-    @DisplayName("Deve retornar verdadeiro qando existir um livro na base com o isbn informado")
+    @DisplayName("Deve retornar verdadeiro quando existir um livro na base com o isbn informado")
     public void returnTrueWhenIsbnExists() {
         String isbn = "8576082675";
         testEntityManager.persist(Book
@@ -35,5 +35,13 @@ public class BookRepositoryTest {
 
         boolean existsIsbn = bookRepository.existsByIsbn(isbn);
         assertThat(existsIsbn).isTrue();
+    }
+
+    @Test
+    @DisplayName("Deve retornar falso quando não existir um livro na base com o isbn informado")
+    public void returnTrueWhenIsbnDoesntExists() {
+        String isbn = "8576082675";
+        boolean existsIsbn = bookRepository.existsByIsbn(isbn);
+        assertThat(existsIsbn).isFalse();
     }
 }
