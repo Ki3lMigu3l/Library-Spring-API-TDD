@@ -65,6 +65,8 @@ public class BookRepositoryTest {
         assertThat(deletedBook).isNull();
     }
 
+
+
     private Book createNewBook(String isbn) {
         return Book.builder()
                 .author("Robert C. Martin")
