@@ -2,12 +2,15 @@ package com.github.ki3lmigu3l.library.repository;
 
 import com.github.ki3lmigu3l.library.api.model.Book;
 import com.github.ki3lmigu3l.library.api.repository.BookRepository;
+import com.github.ki3lmigu3l.library.api.service.BookService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -22,6 +25,9 @@ public class BookRepositoryTest {
     TestEntityManager testEntityManager;
 
     @Autowired
+    BookService bookService;
+
+    @MockBean
     BookRepository bookRepository;
 
     @Test

@@ -23,6 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ActiveProfiles("test")
 public class BookServiceTest {
 
+    @MockBean
     BookService service;
 
     @MockBean
@@ -93,6 +94,22 @@ public class BookServiceTest {
         Mockito.when(repository.findById(id)).thenReturn(Optional.empty());
         Optional<Book> foundBook = service.getById(id);
         assertThat(foundBook.isEmpty()).isTrue();
+    }
+
+    @Test
+    @DisplayName("Deve deletar um livro")
+    public void deleteBookTest () {
+        Book book = Book.builder().id(1l).build();
+        org.junit.jupiter.api.Assertions.assertDoesNotThrow(() -> service.delete(book));
+        Mockito.verify(repository, Mockito.times(1)).delete(book);
+    }
+
+    @Test
+    @DisplayName("Deve ocorrer um erro ao tentar deletar um livro inexistente")
+    public void deleteInvalidBookTest () {
+        Book book = new Book();
+        org.junit.jupiter.api.Assertions.assertThrows(IllegalArgumentException.class, () -> service.delete(book));
+        Mockito.verify(repository, Mockito.never()).delete(book);
     }
 
     private Book createValidBook () {
