@@ -3,15 +3,12 @@ package com.github.ki3lmigu3l.library.repository;
 import com.github.ki3lmigu3l.library.api.model.Book;
 import com.github.ki3lmigu3l.library.api.repository.BookRepository;
 import com.github.ki3lmigu3l.library.api.service.BookService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -26,8 +23,6 @@ public class BookRepositoryTest {
 
     @Autowired
     TestEntityManager testEntityManager;
-
-    BookService bookService;
 
     @Autowired
     BookRepository bookRepository;
@@ -61,22 +56,6 @@ public class BookRepositoryTest {
         assertThat(foundBook.isPresent()).isTrue();
     }
 
-    @Test
-    @DisplayName("Deve deletar um livro")
-    public void deleteBookTest () {
-        Book book = Book.builder().id(1l).build();
-        Assertions.assertDoesNotThrow( () -> bookService.delete(book));
-        Mockito.verify(bookRepository, Mockito.times(1)).delete(book);
-    }
-
-    @Test
-    @DisplayName("Deve lancar um erro ao tentar deletar um livro inexistente")
-    public void deleteInvalidBookTest () {
-        Book book = Book.builder().id(1l).build();
-        bookService.delete(book);
-        Mockito.verify(bookRepository, Mockito.times(1)).delete(book);
-    }
-
     private Book createValidBook () {
         return Book.builder()
                 .author("Robert C. Martin")
@@ -95,7 +74,7 @@ public class BookRepositoryTest {
 
     @Test
     @DisplayName("Deve deletar um livro")
-    public void deleteBookTest() {
+    public void deleteBookTest1() {
 
         Book book = createNewBook("123");
         testEntityManager.persist(book);
