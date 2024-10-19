@@ -10,6 +10,7 @@ public interface BookService {
     Book save (Book any);
 
     Optional<Book> getById(Long id);
+    Optional<Book> getByIsbn(String isbn);
 
     void delete(Book book);
 
