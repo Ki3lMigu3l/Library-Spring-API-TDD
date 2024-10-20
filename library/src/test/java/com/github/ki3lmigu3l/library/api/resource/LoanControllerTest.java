@@ -2,6 +2,7 @@ package com.github.ki3lmigu3l.library.api.resource;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.ki3lmigu3l.library.api.dto.LoanDTO;
+import com.github.ki3lmigu3l.library.api.exception.BusinessException;
 import com.github.ki3lmigu3l.library.api.model.Book;
 import com.github.ki3lmigu3l.library.api.model.Loan;
 import com.github.ki3lmigu3l.library.api.service.BookService;
@@ -74,7 +75,7 @@ public class LoanControllerTest {
 
 
     @Test
-    @DisplayName("Deve retornar um erro ao tentar fazer um emprestido de um livro inexistente")
+    @DisplayName("Deve retornar um erro ao tentar fazer um emprestimo de um livro inexistente")
     public void invalidIsbnCreateLoanTest () throws Exception {
 
         LoanDTO loanDto = LoanDTO.builder().isbn("123").customer("Kiel").build();
@@ -94,5 +95,30 @@ public class LoanControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isBadRequest())
                 .andExpect(jsonPath("errors", Matchers.hasSize(1)))
                 .andExpect(jsonPath("errors[0]").value("Book not found for passed isbn"));
+    }
+
+
+    @Test
+    @DisplayName("Deve retornar um erro ao tentar fazer um emprestimo de um livro já emprestado")
+    public void loanedBookErrorOnCreateLoanTest () throws Exception {
+
+        LoanDTO loanDto = LoanDTO.builder().isbn("123").customer("Kiel").build();
+        String json = new ObjectMapper().writeValueAsString(loanDto);
+
+        Book book = Book.builder().isbn("123").build();
+        BDDMockito.given(bookService.getByIsbn("123")).willReturn(Optional.of(book));
+
+        BDDMockito.given(loanService.save(Mockito.any(Loan.class))).willThrow(new BusinessException("Book already loaned"));
+
+        MockHttpServletRequestBuilder request = MockMvcRequestBuilders
+                .post(LOAN_API)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(json);
+
+        mvc.perform(request)
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(jsonPath("errors", Matchers.hasSize(1)))
+                .andExpect(jsonPath("errors[0]").value("Book already loaned"));
     }
 }
