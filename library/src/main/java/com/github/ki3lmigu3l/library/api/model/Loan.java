@@ -1,5 +1,6 @@
 package com.github.ki3lmigu3l.library.api.model;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,12 +12,23 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@Entity
 public class Loan {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String customer;
-    private Book book;
-    private LocalDate loanDate;
-    private Boolean returned;
 
+    @Column
+    private String customer;
+
+    @JoinColumn(name = "id_book")
+    @ManyToOne
+    private Book book;
+
+    @Column
+    private LocalDate loanDate;
+
+    @Column
+    private Boolean returned;
 }
