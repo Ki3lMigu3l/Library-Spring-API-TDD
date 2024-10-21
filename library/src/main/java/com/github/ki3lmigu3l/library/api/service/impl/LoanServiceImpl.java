@@ -6,6 +6,8 @@ import com.github.ki3lmigu3l.library.api.repository.LoanRepository;
 import com.github.ki3lmigu3l.library.api.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Optional;
+
 public class LoanServiceImpl implements LoanService {
 
 
@@ -22,5 +24,15 @@ public class LoanServiceImpl implements LoanService {
         }
 
         return repository.save(loan);
+    }
+
+    @Override
+    public Optional<Loan> getById(Long id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Loan update(Loan loan) {
+        return null;
     }
 }

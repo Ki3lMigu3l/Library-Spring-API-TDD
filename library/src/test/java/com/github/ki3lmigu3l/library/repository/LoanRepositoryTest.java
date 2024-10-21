@@ -1,6 +1,9 @@
 package com.github.ki3lmigu3l.library.repository;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.ki3lmigu3l.library.api.dto.ReturnedLoanDto;
 import com.github.ki3lmigu3l.library.api.model.Book;
 import com.github.ki3lmigu3l.library.api.model.Loan;
 import com.github.ki3lmigu3l.library.api.repository.LoanRepository;
@@ -41,7 +44,6 @@ public class LoanRepositoryTest {
         boolean exists = repository.existsByBookAndNotReturned(book);
         assertThat(exists).isTrue();
     }
-
 
     private Book createNewBook() {
         return Book.builder()

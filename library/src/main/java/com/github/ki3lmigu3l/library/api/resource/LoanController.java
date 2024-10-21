@@ -1,6 +1,7 @@
 package com.github.ki3lmigu3l.library.api.resource;
 
 import com.github.ki3lmigu3l.library.api.dto.LoanDTO;
+import com.github.ki3lmigu3l.library.api.dto.ReturnedLoanDto;
 import com.github.ki3lmigu3l.library.api.model.Book;
 import com.github.ki3lmigu3l.library.api.model.Loan;
 import com.github.ki3lmigu3l.library.api.service.BookService;
@@ -35,5 +36,12 @@ public class LoanController {
 
         Loan loanSaved = loanService.save(loan);
         return loanSaved.getId();
+    }
+
+    @PatchMapping("{id}")
+    public void returnedBook (@PathVariable Long id, @RequestBody ReturnedLoanDto loanDto) {
+        Loan loan = loanService.getById(id).get();
+        loan.setReturned(loanDto.getReturned());
+        loanService.update(loan);
     }
 }
