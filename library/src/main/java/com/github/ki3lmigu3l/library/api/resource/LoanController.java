@@ -70,4 +70,6 @@ public class LoanController {
                 }).collect(Collectors.toList());
         return new PageImpl<LoanDTO>(loans, pageRequest, result.getTotalElements());
     }
+
+
 }

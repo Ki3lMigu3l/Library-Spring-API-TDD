@@ -19,6 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -69,11 +70,49 @@ public class LoanRepositoryTest {
         assertThat(result.getTotalElements()).isEqualTo(1);
     }
 
+    @Test
+    @DisplayName("Deve obter emprestimos cuja a data do emprestimo seja menor ou igual a três dias e não retornado")
+    public void findByLoanDateLessThanAndNotReturnedTest(){
+        Loan loan = createAndPersistLoan(LocalDate.now().minusDays(5));
+        List<Loan> result = repository
+                .findByLoansDateLassThanAndNotReturned(LocalDate.now().minusDays(4));
+
+        assertThat(result).hasSize(1).contains(loan);
+
+    }
+
+    @Test
+    @DisplayName("Deve retornar vazio quando não houver emprestimos atrasados")
+    public void notFindByLoanDateLessThanAndNotReturnedTest(){
+        Loan loan = createAndPersistLoan(LocalDate.now());
+
+        List<Loan> result = repository
+                .findByLoansDateLassThanAndNotReturned(LocalDate.now().minusDays(4));
+
+        assertThat(result).isEmpty();
+    }
+
     private Book createNewBook() {
         return Book.builder()
                 .author("Robert C. Martin")
                 .title("Código Limpo")
                 .isbn("123")
                 .build();
+    }
+
+    public Loan createAndPersistLoan(LocalDate loanDate) {
+        Book book = createNewBook();
+        book.setIsbn("123");
+        entityManager.persist(book);
+
+        Loan loan = Loan.builder()
+                .book(book)
+                .customer("Kiel")
+                .loanDate(loanDate)
+                .build();
+
+        entityManager.persist(loan);
+
+        return loan;
     }
 }

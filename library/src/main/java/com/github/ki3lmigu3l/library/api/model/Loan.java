@@ -22,6 +22,9 @@ public class Loan {
     @Column
     private String customer;
 
+    @Column(name = "customer_email")
+    private String customerEmail;
+
     @JoinColumn(name = "id_book")
     @ManyToOne
     private Book book;
@@ -31,4 +34,5 @@ public class Loan {
 
     @Column
     private Boolean returned;
+
 }
