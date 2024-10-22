@@ -17,4 +17,6 @@ public interface LoanService {
     Loan update(Loan loan);
 
     Page<Loan> find(LoanFilterDTO loanFilterDTO, Pageable pageRequest);
+
+    Page<Loan> getLoansByBook(Book book, Pageable pageable);
 }
