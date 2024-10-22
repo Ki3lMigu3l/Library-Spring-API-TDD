@@ -24,14 +24,14 @@ public class BookController {
     private BookService bookService;
 
     @Autowired
-    public BookController (ModelMapper modelMapper, BookService bookService) {
+    public BookController(ModelMapper modelMapper, BookService bookService) {
         this.modelMapper = modelMapper;
         this.bookService = bookService;
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public BookDTO createBook (@RequestBody @Valid BookDTO bookDTO) {
+    public BookDTO createBook(@RequestBody @Valid BookDTO bookDTO) {
         Book book = modelMapper.map(bookDTO, Book.class);
         book = bookService.save(book);
         return modelMapper.map(book, BookDTO.class);
@@ -56,7 +56,7 @@ public class BookController {
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
-    public BookDTO update (@PathVariable Long id, @RequestBody BookDTO bookDTO) {
+    public BookDTO update(@PathVariable Long id, @RequestBody BookDTO bookDTO) {
         Book book = bookService.getById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -67,7 +67,7 @@ public class BookController {
     }
 
     @GetMapping
-    public Page<BookDTO> find (BookDTO bookDTO, Pageable pageRequest) {
+    public Page<BookDTO> find(BookDTO bookDTO, Pageable pageRequest) {
         Book filter = modelMapper.map(bookDTO, Book.class);
         Page<Book> result = bookService.find(filter, pageRequest);
         List<BookDTO> list = result.getContent()
