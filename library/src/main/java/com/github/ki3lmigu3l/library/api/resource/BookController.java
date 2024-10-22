@@ -8,6 +8,7 @@ import com.github.ki3lmigu3l.library.api.service.BookService;
 import com.github.ki3lmigu3l.library.api.service.LoanService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/books")
 @RequiredArgsConstructor
+@Slf4j
 public class BookController {
 
     private final ModelMapper modelMapper;
@@ -31,6 +33,7 @@ public class BookController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public BookDTO createBook(@RequestBody @Valid BookDTO bookDTO) {
+        log.info(" creating a book for isbn: {} ", bookDTO.getIsbn());
         Book book = modelMapper.map(bookDTO, Book.class);
         book = bookService.save(book);
         return modelMapper.map(book, BookDTO.class);
@@ -38,6 +41,7 @@ public class BookController {
 
     @GetMapping("{id}")
     public BookDTO get(@PathVariable Long id) {
+        log.info(" obtaining detais for book id: {}", id);
         return bookService
                 .getById(id)
                 .map(book -> modelMapper.map(book, BookDTO.class))
@@ -47,6 +51,7 @@ public class BookController {
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@PathVariable Long id) {
+        log.info(" deleting book of id: {}", id);
         Book book = bookService.getById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
@@ -56,6 +61,7 @@ public class BookController {
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
     public BookDTO update(@PathVariable Long id, @RequestBody BookDTO bookDTO) {
+        log.info(" updating book of id: {}", id);
         Book book = bookService.getById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
