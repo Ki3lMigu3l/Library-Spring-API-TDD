@@ -26,18 +26,16 @@ O projeto foi desenvolvido seguindo a metodologia de Desenvolvimento Orientado p
   3. Execute os testes
   4. Inicie a aplicação
 
-```bash
+<br>
 
-# Clonar o repositório
-git clone https://github.com/Ki3lMigu3l/Library-Spring-API-TDD.git
+<div align="center">
+  <img src="https://github.com/Ki3lMigu3l/Library-Spring-API-TDD/blob/main/readme/readme-init.png" alt="readme-init.png" width="862" height="499"/>
+</div>
 
-# Entrar no diretório
-cd library
+### Spring Boot Actuator
+O Spring Boot Actuator é integrado à Library API para fornecer uma série de endpoints que permitem monitorar e gerenciar a aplicação em tempo real. Com ele, você pode acessar informações sobre a saúde da aplicação, métricas de desempenho, status de logs e configurações de ambiente. Os endpoints do Actuator ajudam na detecção de problemas e na análise do desempenho da API.
 
-# Executar os testes
-mvn test
+<br>
 
-# Iniciar a aplicação
-mvn spring-boot:run
-
-```
+### Spring Boot Admin
+A integração com o Spring Boot Admin permite que a Library API seja registrada em um painel de administração, onde você pode monitorar a aplicação de forma centralizada. O Spring Boot Admin fornece uma interface web intuitiva, onde você pode visualizar informações detalhadas sobre a saúde, métricas, logs e o estado geral da aplicação. Com isso, é possível gerenciar múltiplas instâncias da Library API e garantir que a aplicação esteja funcionando corretamente.
