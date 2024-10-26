@@ -40,11 +40,15 @@ O Spring Boot Actuator é integrado à Library API para fornecer uma série de e
 ### Spring Boot Admin
 A integração com o Spring Boot Admin permite que a Library API seja registrada em um painel de administração, onde você pode monitorar a aplicação de forma centralizada. O Spring Boot Admin fornece uma interface web intuitiva, onde você pode visualizar informações detalhadas sobre a saúde, métricas, logs e o estado geral da aplicação. Com isso, é possível gerenciar múltiplas instâncias da Library API e garantir que a aplicação esteja funcionando corretamente.
 
+<div align="center">
+  <img src="https://github.com/Ki3lMigu3l/Library-Spring-API-TDD/blob/main/readme/Spring-Boot-Admin.png" alt="readme-init.png" width="951" height="457"/>
+</div>
+
 <br>
 
 ### Documentação com Swagger
 Swagger é um conjunto de ferramentas de software open-source que ajuda a projetar, construir, documentar e consumir APIs RESTful. 
 
 <div align="center">
-  <img src="https://github.com/Ki3lMigu3l/Library-Spring-API-TDD/blob/main/readme/swagger-ui-doc.png" alt="readme-init.png" width="862" height="499"/>
+  <img src="https://github.com/Ki3lMigu3l/Library-Spring-API-TDD/blob/main/readme/swagger-ui-doc.png" alt="readme-init.png" width="902" height="466"/>
 </div>
