@@ -52,3 +52,13 @@ Swagger é um conjunto de ferramentas de software open-source que ajuda a projet
 <div align="center">
   <img src="https://github.com/Ki3lMigu3l/Library-Spring-API-TDD/blob/main/readme/swagger-ui-doc.png" alt="readme-init.png" width="902" height="466"/>
 </div>
+
+<br>
+
+## Conclusão
+
+A Library API Restful é uma solução de backend robusta para o gerenciamento de bibliotecas, permitindo operações fundamentais como cadastro, consulta, atualização e exclusão de livros por meio de uma interface RESTful. Com a aplicação da metodologia Test-Driven Development (TDD), asseguramos a confiabilidade e a qualidade do código desde as fases iniciais do desenvolvimento, garantindo que cada funcionalidade seja testada e validada.
+
+A integração do Spring Boot Actuator possibilita o monitoramento em tempo real da saúde da aplicação, oferecendo métricas e logs que são essenciais para a manutenção e detecção de problemas. A utilização do Spring Boot Admin facilita a gestão de múltiplas instâncias da Library API, permitindo uma visualização centralizada e intuitiva das informações da aplicação.
+
+Além disso, a documentação gerada pelo Swagger torna a API acessível para desenvolvedores e integradores, proporcionando um entendimento claro de suas funcionalidades e como utilizá-las. Com essas características, a Library API Restful se destaca como uma base sólida para o gerenciamento de bibliotecas, preparada para atender às demandas atuais e futuras de forma eficiente.
