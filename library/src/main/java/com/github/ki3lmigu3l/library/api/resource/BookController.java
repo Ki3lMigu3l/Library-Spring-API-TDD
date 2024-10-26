@@ -6,6 +6,7 @@ import com.github.ki3lmigu3l.library.api.model.Book;
 import com.github.ki3lmigu3l.library.api.model.Loan;
 import com.github.ki3lmigu3l.library.api.service.BookService;
 import com.github.ki3lmigu3l.library.api.service.LoanService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,7 @@ public class BookController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Operation(summary = "Cria um novo Livro", description = "Salva um livro na base de dados.")
     public BookDTO createBook(@RequestBody @Valid BookDTO bookDTO) {
         log.info(" creating a book for isbn: {} ", bookDTO.getIsbn());
         Book book = modelMapper.map(bookDTO, Book.class);
@@ -40,6 +42,7 @@ public class BookController {
     }
 
     @GetMapping("{id}")
+    @Operation(summary = "Obtém detalhes de um Livro", description = "Recupera um livro da base de dados pelo ID.")
     public BookDTO get(@PathVariable Long id) {
         log.info(" obtaining detais for book id: {}", id);
         return bookService
@@ -50,6 +53,7 @@ public class BookController {
 
     @DeleteMapping("{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Operation(summary = "Deleta um Livro", description = "Remove um livro da base de dados pelo ID.")
     public void delete(@PathVariable Long id) {
         log.info(" deleting book of id: {}", id);
         Book book = bookService.getById(id)
@@ -60,6 +64,7 @@ public class BookController {
 
     @PutMapping("{id}")
     @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Atualiza um Livro", description = "Atualiza as informações de um livro existente na base de dados pelo ID.")
     public BookDTO update(@PathVariable Long id, @RequestBody BookDTO bookDTO) {
         log.info(" updating book of id: {}", id);
         Book book = bookService.getById(id)
@@ -72,6 +77,7 @@ public class BookController {
     }
 
     @GetMapping
+    @Operation(summary = "Lista de Livros", description = "Retorna uma lista de livros, podendo aplicar filtros.")
     public Page<BookDTO> find(BookDTO bookDTO, Pageable pageRequest) {
         Book filter = modelMapper.map(bookDTO, Book.class);
         Page<Book> result = bookService.find(filter, pageRequest);
@@ -84,6 +90,7 @@ public class BookController {
     }
 
     @GetMapping("{id}/loans")
+    @Operation(summary = "Lista de Empréstimos de um Livro", description = "Recupera todos os empréstimos associados a um livro pelo ID.")
     public Page<LoanDTO> loansByBook(@PathVariable Long id, Pageable pageable) {
         Book book = bookService.getById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
         Page<Loan> result = loanService.getLoansByBook(book, pageable);
